@@ -20,6 +20,38 @@ export default function LoginScreen() {
     setIsLoading(true);
     setErrorMsg('');
 
+    // Development Bypass: Allow clerk login while backend is being updated
+    if (email.toLowerCase() === 'adminclerk@dlrrd.gov.za' && password === 'admin123') {
+      setTimeout(() => {
+        setIsLoading(false);
+        router.replace({
+          pathname: '/(dashboard)',
+          params: {
+            fullName: 'Admin Clerk',
+            email: 'adminclerk@dlrrd.gov.za',
+            role: 'Clerk'
+          }
+        });
+      }, 800);
+      return;
+    }
+
+    // Development Bypass: Allow supervisor login while backend is being updated
+    if (email.toLowerCase() === 'supervisor@dlrrd.gov.za' && password === 'admin123') {
+      setTimeout(() => {
+        setIsLoading(false);
+        router.replace({
+          pathname: '/(dashboard)',
+          params: {
+            fullName: 'Site Supervisor',
+            email: 'supervisor@dlrrd.gov.za',
+            role: 'Supervisor'
+          }
+        });
+      }, 800);
+      return;
+    }
+
     try {
       const response = await fetch('https://cmsbackend-f4arbkegcchtbxc6.southafricanorth-01.azurewebsites.net/auth/login', {
         method: 'POST',
